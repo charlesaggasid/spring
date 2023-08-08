@@ -37,14 +37,16 @@ public class PostController {
 	
 	@GetMapping("/posts")
 	public String viewPostIndexPage(Model model) {
+//		List<Post> posts = postDao.findAll();
 		model.addAttribute("posts", postDao.findAll());
 		return "posts/index";
 	}
 	
 	@GetMapping("/posts/{id}")
-	@ResponseBody
-	public String viewIndividualPost(@PathVariable int id) {
-		return "Viewing post with ID: " + id;
+	public String viewIndividualPost(@PathVariable long id, Model model) {
+		Post post = postDao.findById(id).orElse(null);
+		model.addAttribute("post", post);
+		return "posts/show";
 	}
 	
 	@GetMapping("/posts/create")
