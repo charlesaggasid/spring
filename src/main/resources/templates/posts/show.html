@@ -3,10 +3,40 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Post Details</title>
+	<th:block th:include="partials/bootstrap :: styling"></th:block>
 </head>
 <body>
-<h1 th:text="${post.title}"></h1>
-<p th:text="${post.body}"></p>
-<a th:href="@{/posts}">Back to Posts</a>
+
+<div class="container mt-4">
+	<h1>Viewing Single Post</h1>
+</div>
+
+<div class="container mt-4">
+	<h3 th:text="${post.title}" class="mb-3"></h3>
+	<p th:text="${post.body}" class="border p-3"></p>
+
+	<div class="container mt-4">
+		<div class="row">
+			<div class="col-md-6">
+				<!-- Edit button -->
+				<a th:href="@{/posts/{id}/edit(id=${post.id})}" class="btn btn-primary">Edit</a>
+			</div>
+			<div class="col-md-6">
+				<!-- Delete button -->
+				<form th:action="@{/posts/{id}/delete(id=${post.id})}" method="post">
+					<button type="submit" class="btn btn-danger">Delete</button>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<a th:href="@{/posts}" class="mt-8">Back to Posts</a>
+</div>
+
+</div>
+
+<div class="container">
+	<!-- Content here -->
+</div>
 </body>
 </html>

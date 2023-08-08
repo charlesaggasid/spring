@@ -42,6 +42,8 @@ public class PostController {
 		return "posts/index";
 	}
 	
+	
+	//View individual post
 	@GetMapping("/posts/{id}")
 	public String viewIndividualPost(@PathVariable long id, Model model) {
 		Post post = postDao.findById(id).orElse(null);
@@ -49,6 +51,7 @@ public class PostController {
 		return "posts/show";
 	}
 	
+	//Create a new post
 	@GetMapping("/posts/create")
 	public String viewFormCreatePost(Model model) {
 		model.addAttribute("post", new Post());
@@ -60,5 +63,33 @@ public class PostController {
 		postDao.save(newPost);
 		return "redirect:/posts";
 	}
-
+	
+	//Edit a post
+	@GetMapping("/posts/{id}/edit")
+	public String viewFormEditPost(@PathVariable Long id, Model model) {
+		Post post = postDao.findById(id).orElse(null);
+		model.addAttribute("post", post);
+		return "posts/edit";
+	}
+	
+	@PostMapping("/posts/{id}/edit")
+	public String editPost(@PathVariable Long id, @ModelAttribute Post updatedPost) {
+		Post existingPost = postDao.findById(id).orElse(null);
+		if (existingPost != null) {
+			existingPost.setTitle(updatedPost.getTitle());
+			existingPost.setBody(updatedPost.getBody());
+			postDao.save(existingPost);
+		}
+		return "redirect:/posts/" + id;
+	}
+	
+	
+	//create Delete a post
+	@PostMapping("/posts/{id}/delete")
+	public String deletePost(@PathVariable Long id) {
+		postDao.deleteById(id);
+		return "redirect:/posts";
+	}
+	
+	
 }

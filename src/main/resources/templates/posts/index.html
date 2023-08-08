@@ -3,14 +3,21 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Posts Index</title>
+	<th:block th:include="partials/bootstrap :: styling"></th:block>
 </head>
 <body>
-<h1>Posts Index</h1>
-<ul>
-	<li th:each="post : ${posts}">
-		<a th:href="@{/posts/{id}(id=${post.id})}" th:text="${post.title}"></a>
-	</li>
-</ul>
-<a th:href="@{/posts/create}">Create New Post</a>
+<div class="container mt-4">
+	<h1>Posts Index</h1>
+	<div class="row">
+		<div class="col-md-6">
+			<ul class="list-group mt-3">
+				<li th:each="post : ${posts}" class="list-group-item">
+					<a th:href="@{/posts/{id}(id=${post.id})}" th:text="${post.title}"></a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<a th:href="@{/posts/create}" class="btn btn-primary mt-3">Create New Post</a>
+</div>
 </body>
 </html>
