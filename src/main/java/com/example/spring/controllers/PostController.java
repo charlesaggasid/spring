@@ -1,7 +1,15 @@
 package com.example.spring.controllers;
 
+import com.example.spring.models.Post;
+import com.example.spring.repositories.PostRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /*
 Exercise 3
@@ -17,14 +25,20 @@ GET	/posts/create	view the form for creating a post
 POST	/posts/create	create a new post
 
  */
-
 @Controller
 public class PostController {
-
+	
+	private final PostRepository postDao;
+	
+	public PostController(PostRepository postRepository) {
+		this.postDao = postRepository;
+	}
+	
+	
 	@GetMapping("/posts")
-	@ResponseBody
-	public String index() {
-		return "Posts index page";
+	public String viewPostIndexPage(Model model) {
+		model.addAttribute("posts", postDao.findAll());
+		return "posts/index";
 	}
 	
 	@GetMapping("/posts/{id}")
@@ -34,16 +48,15 @@ public class PostController {
 	}
 	
 	@GetMapping("/posts/create")
-	@ResponseBody
-	public String viewFormCreatePost() {
-		return "Viewing form for creating a post";
+	public String viewFormCreatePost(Model model) {
+		model.addAttribute("post", new Post());
+		return "/posts/create";
 	}
 	
 	@PostMapping("/posts/create")
-	@ResponseBody
-	public String createNewPost(@ModelAttribute Post post) {
-		// Logic to save the new post
-		return "New post created";
+	public String createNewPost(@ModelAttribute Post newPost) {
+		postDao.save(newPost);
+		return "redirect:/posts";
 	}
 
 }
