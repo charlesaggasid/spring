@@ -7,32 +7,31 @@
 </head>
 <body>
 
-<div class="container mt-4">
+<div class="container mt-4 mb-5">
 	<h1>Viewing Single Post</h1>
 </div>
 
-<div class="container mt-4">
-	<h3 th:text="${post.title}" class="mb-3"></h3>
-	<p th:text="${post.body}" class="border p-3"></p>
+<div class="container mt-5">
+<!--	<h3>Post Title</h3>-->
+	<h4 th:text="${post.title}" class=""></h4>
+	<hr>
+<!--	<h3 class="mt-5">Body</h3>-->
+		<p th:text="${post.body}" class="font weight bold"></p>
 
-	<div class="container mt-4">
-		<div class="row">
-			<div class="col-md-6">
-				<!-- Edit button -->
-				<a th:href="@{/posts/{id}/edit(id=${post.id})}" class="btn btn-primary">Edit</a>
-			</div>
-			<div class="col-md-6">
-				<!-- Delete button -->
-				<form th:action="@{/posts/{id}/delete(id=${post.id})}" method="post">
-					<button type="submit" class="btn btn-danger">Delete</button>
-				</form>
-			</div>
+
+	<div class="row mt-4">
+		<div class="col-md-6">
+			<!-- Edit button -->
+			<a th:href="@{/posts}" class="btn btn-secondary mr-2">Back to Posts</a>
+			<a th:href="@{/posts/{id}/edit(id=${post.id})}" class="btn btn-primary">Edit</a>
+		</div>
+		<div class="col-md-6 text-md-right">
+			<!-- Delete button -->
+			<form th:action="@{/posts/{id}/delete(id=${post.id})}" method="post">
+				<button type="submit" class="btn btn-danger">Delete</button>
+			</form>
 		</div>
 	</div>
-
-	<a th:href="@{/posts}" class="mt-8">Back to Posts</a>
-</div>
-
 </div>
 
 <div class="container">
